@@ -1,0 +1,12 @@
+\chapter{Bottlenecks}
+\begin{enumerate}
+\item Copying between host and device memory may incur a performance hit due to system bus bandwidth and latency (this can be partly alleviated with asynchronous memory transfers, handled by the GPU's DMA engine)
+\item Threads should be running in groups of at least 32 for best performance, with total number of threads numbering in the thousands. Branches in the program code do not impact performance significantly, provided that each of 32 threads takes the same execution path; the SIMD execution model becomes a significant limitation for any inherently divergent task 
+\item Consider we have an application in which we need to create an array that has 20,000 integers. So the amount of memory we will need to fit 20,000 integers = 20,000 * 4B = 80KB. But the maximum amount of shared memory per multiprocessor is 48 KB.
+\item For a large number of threads, we can't assign more than 1024 threads per block.
+\item Local memory being limited to 512 KB could hurt the performance in two ways-
+\begin{enumerate}
+\item Increased pressure on the memory bus
+\item Increased instruction count
+\end{enumerate}
+\end{enumerate}

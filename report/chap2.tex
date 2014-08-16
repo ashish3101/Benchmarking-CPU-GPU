@@ -1,0 +1,92 @@
+\chapter{Problems faced while Installation}
+
+\section{How to install NVidia driver in Fedora 18}
+-------------------------------------------------------------------------------------------------
+
+Fedora 18 comes with open source \textbf{NOUVEAU driver} for NVIDIA graphics card. To install the NVIDIA propriteray driver follow the below steps.
+
+\begin{enumerate}
+\item Blacklist the nouveau driver: Add below line to /etc/modprobe.d/blacklist.conf file blacklist nouveau.
+\item Rebuild the initramfs image file using dracut:\\
+* Backup the initramfs file
+\begin{verbatim}
+$ sudo mv /boot/initramfs-(uname -r).img /boot/initramfs-(uname -r).img.bak
+\end{verbatim}
+* Rebuild the initramfs file
+\begin{verbatim}
+$ sudo dracut -v /boot/initramfs-(uname -r).img (uname -r)
+\end{verbatim}
+\item Reboot the system to runlevel 3 (without graphics)
+\item Check that nouveau driver is not loaded
+\begin{verbatim}
+$ lsmod | grep nouveau
+\end{verbatim}
+\item Run the NVidia driver package
+\begin{verbatim}
+$ sudo ./NVIDIA-Linux-x86\_64-195.36.15-pkg2.run
+\end{verbatim}
+Above command will create xorg.conf file in /etc/X11 directory which is responsible to use NVidia driver in X.
+\item Restart the system and NVidia driver will be used now.
+\end{enumerate}
+
+\section{How to install NVidia driver in Fedora 18}
+-------------------------------------------------------------------------------------------------
+
+\begin{enumerate}
+\item Get the latest NVIDIA driver from here. Reboot with run-level 3 and install the driver. This should be pretty much straight-forward. Reboot after install.
+\item Get the latest CUDA Toolkit.
+\item Install the toolkit. This is a little bit tricky as the installer will claim that you have the wrong GCC version. In order to overcome this problem, run the installer with
+\begin{verbatim}
+>sh cuda_5.0.35_linux_64_fedora16-1.run -override compiler
+\end{verbatim}
+Skip the driver installation and select [y] for the toolkit and sample files.
+\item Although in step (3) the GCC version check has been skipped, it is still hard-coded in one of the CUDA header files. Thus, go to line 80 of
+\begin{verbatim}
+/usr/local/cuda-5.0/include/host_config.h \end{verbatim} (or wherever the installer has put this header file) and change
+\begin{verbatim}
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 6)
+    to
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 7)
+\end{verbatim}
+Now NVCC won’t complain about this.
+\item When you try to compile your project NVCC still claims about this
+\begin{verbatim}
+... atomicity.h(48): error: identifier "__atomic_fetch_add" is undefined
+... atomicity.h(52): error: identifier "__atomic_fetch_add" is undefined
+\end{verbatim}
+We found a nice workaround for this problem here. All you need to do is
+\begin{verbatim}
+> echo "#undef _GLIBCXX_ATOMIC_BUILTINS" 
+  > /usr/local/include/undef_atomics_int128.h
+> echo "#undef _GLIBCXX_USE_INT128" 
+  >> /usr/local/include/undef_atomics_int128.h
+\end{verbatim}
+and include this file when compiling with NVCC, i.e.
+\begin{verbatim}
+> nvcc.bin --pre-include /usr/local/include/undef_atomics_int128.h
+  [other commands]
+\end{verbatim}
+Done. That worked for me, and I could compile the examples (after modifying the Makefiles with the “--pre-include” trick from (5)” without any troubles. Results from the NVIDIA samples look reasonable, what makes me think that CUDA 5.0 should work without (large) troubles on F18.\\
+\begin{verbatim}
+After following the steps above you may need to do the following
+to build the examples.
+
+A) The Makefiles don't pay attention to LD_LIBRARY_PATH or 
+the ldconfig.
+Assuming you installed to /usr/local, they use the path 
+/usr/local/cuda/lib64 
+but disregard the /usr/lib64/nvidia/ directory in which the libcuda*so
+is located. To fix ad a symlink in the /usr/local/cuda/lib64 directory:
+$ cd /usr/local/cuda/lib64
+$ ln -s /usr/lib64/nvidia/libcuda.so libcuda.so
+
+B) Run make from the /usr/local/cuda/samples directory as follows:
+$ cd /usr/local/cuda/samples
+$ make -k EXTRA_NVCCFLAGS=
+"--pre-include /usr/local/include/undef_atomics_int128.h"
+where /usr/local/include/undef_atomics_int128.h is the header file 
+constructed in the previous post.
+The "-k" tells make to continue even if a particular example fails to build,
+e.g. for examples requiring something you don't have installed such as mpi. 
+\end{verbatim}
+\end{enumerate}

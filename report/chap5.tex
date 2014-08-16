@@ -1,0 +1,23 @@
+\chapter{Benchmark-III}
+
+\section{The Task}
+The objective of the program is simple. It’s the brute force euclidian distance transform. Basically, in a binary image, for each pixel in the foreground we verify what is the 2D euclidian distance to the nearest pixel in the background.
+
+\section{Code Walkthrough}
+Code Walkthrough mentioned in file codewalkthrough.
+\section{Result}
+\subsection{Output}
+It took about 35.8 seconds for a 1 megapixel image in a Tesla C2050 GPU and about 1 hour on normal CPU.\\\\
+\newpage
+\subsection{Images}
+\vspace{1cm}
+\textbf{Input Image}\\\\
+\includegraphics [width=1.2\textwidth]{input.png}
+\newpage
+\textbf{Output Image}\\\\
+\includegraphics [width=1.2\textwidth]{output.png}
+
+\section{Inferences}
+\begin{itemize}
+\item From this it could be inferred that brute force ran fast on GPU rather than CPU. 
+\end{itemize}

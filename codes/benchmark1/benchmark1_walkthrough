@@ -1,0 +1,21 @@
+6 - 10	This is the kernel code that is called by main function. It allocates a thread ID to the simultaneous processes. Each thread then computes the square root of the elements of the array a_d and place it in the same position b_d.
+
+14		Prints column headers on the screen
+
+17		Loop of 500 is initialized with i starting from 0 ranging to 50000 over a step size of 100
+
+22		This loop computes the square root of the sample for 10 times and the average is the final output of that sample.
+
+32 - 33	Memory is allocated for the array for input and output on host.
+
+35 - 36	Memory is allocated for the array for input and output on device.
+
+38 -39	Input array is populated with the elements. An element of array holds the value equal to its index value.
+
+41		The host input array is copied to the device input array
+
+46 - 47	The kernel code is called with device input array, device output array and number of elements as arguments.
+
+57 - 66	The same process done for GPU is done on CPU.
+
+68 - 85	The output is saved inside a file for reference of the user.

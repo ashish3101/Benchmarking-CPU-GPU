@@ -1,0 +1,62 @@
+\chapter{Initial Findings}
+
+\section{How CPUs and GPUs differ ?}
+\begin{enumerate}
+\item Latency Intolerance versus Latency Tolerance
+\item Task Parallelism versus Data Parallelism
+\item Multi-threaded Cores versus SIMT (Single Instruction Multiple Thread) Cores
+\item 10s of Threads versus 10,000s of Threads
+\end{enumerate}
+
+\section{Latency and Throughput}
+\begin{enumerate}
+\item “Latency is a time delaybetween the moment something is initiated, 
+and the moment one of its effects begins or becomes detectable”
+\item For example, the time delay between a request for texture reading and texture 
+data returns
+\item Throughput is the amount of work done in a given amount of time
+\item For example, how many triangles processed per second
+\item CPUs are low latency low throughput processors
+\item GPUs are high latency high throughput processors
+\end{enumerate}
+
+\section{Latency}
+GPUs are designed for tasks that can tolerate latency
+\begin{enumerate}
+\item Example: Graphics in a game (simplified scenario): 
+\item To be efficient, GPUs must have high throughput, i.e. processing millions of pixels in a single frame
+\end{enumerate}
+
+\section{CPUs are designed to minimize latency}
+\begin{enumerate}
+\item Example: Mouse or keyboard input
+\item Caches are needed to minimize latency
+\item CPUs are designed to maximize running operations out of cache
+\item Instruction pre-fetch
+\item Out-of-order execution, flow control
+\item ÆCPUs needa large cache, GPUs do not
+\item GPUs can dedicate more of the transistor area to computation horsepower
+\end{enumerate}
+
+\section{Parallism in GPU v. GPU}
+\subsection{CPU}
+\begin{enumerate}
+\item CPUs use task parallelism.
+\item Multiple tasks map to multiple threads.
+\item Tasks run different instructions.
+\item 10s of relatively heavyweight threads run on 10s of cores.
+\item Each thread managed and scheduled explicitly.
+\item Each thread has to be individually programmed. 
+\end{enumerate}
+\subsection{GPU}
+\begin{enumerate}
+\item GPUs use data parallelism.
+\item SIMD model (Single Instruction Multiple Data).
+\item Same instruction on different data.
+\item 10,000s of lightweight threads on 100s of cores.
+\item Threads are managed and scheduled by hardware.
+\item Programming done for batches of threads (e.g. one pixel shader per group of pixels, or draw call).
+\end{enumerate}
+\section{Why are we still using CPUs instead of GPUs?}
+GPUs have far more processor cores than CPUs, but because each GPU core runs significantly slower than a CPU core and do not have the features needed for modern operating systems, they are not appropriate for performing most of the processing in everyday computing.Features missing from GPUs include interrupts and virtual memory, which are required to implement a modern operating system. Furthermore, GPUs use a fundamentally different architecture; one would have to program an application specifically for a GPU for it to work, and significantly different techniques are required to program GPUs. The GPU is not faster than the CPU. The CPU excels at doing complex manipulations to a small set of data, the GPU excels at doing simple manipulations to a large set of data.\\\\
+The reason why we are still using CPU is not because x86 is the king of CPU architecture and Windows is written for x86, the reason why we are still using CPU is because the kind of tasks that an OS needs to do, i.e. making decisions, is run more efficiently on a CPU architecture. An OS needs to look at a number of different types of data and make various decisions which all depends on each other; this kind of job does not easily parallelizes, at least not into an SIMD architecture.

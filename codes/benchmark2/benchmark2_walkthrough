@@ -1,0 +1,25 @@
+8 - 12	The kernel code is called by the main function. The thread index is calculated and the element of the array corresponding to the index is multiplied by 2 and saved in another array.
+
+15- 20	This function is called by host and runs on CPU. Every element is multiplied by 2 and stored in output is stored in another array.
+
+25 - 34	Initializing the variables.
+
+36		Loop of 8000 is initialized with i starting from 0 ranging to 8000 over a step size of 1.
+
+38 - 39	Memory allocation is done for the input and output arrays on host.
+
+41 - 42	Memory allocation is done for the input and output arrays on device.
+
+46 -47	Input array is populated with the elements. An element of array holds the value equal to its index value.
+
+49		Host input array is copied to the device input array.
+
+51		Kernel code is called with device input and output array and the array size as arguments.
+
+52		The threads are synchronized using cudaThreadSynchronize () function.
+
+54		The device output array is copied in the device output array.
+
+57		The host function is called to do the same work done on GPU.
+
+60 - 68	Finally the time taken is calculated and the memory is deallocated.

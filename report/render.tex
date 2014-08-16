@@ -1,0 +1,47 @@
+\newpage
+\chapter{Benchmark-IV}
+
+\section{The Task}
+\textbf{What is Video Rendering}\\\\
+Rendering is the computer's way of taking effects, such as color correction or transitions, and adding them to the actual video in order to make the video playback smooth. Without the rendering process, the video playback would be choppy because the computer would have to compute the video and the effects separately.\\\\
+\textbf{Benchmarking GPU Acceleration in Vegas Pro 12}\\\\
+Vegas Pro™ 12 leverages the processing capabilities of modern GPUs (Graphic Processing Units) using the industry-standard OpenCL™ framework. Rather than being tied to a single manufacturer or technology, this hardware-agnostic approach enables Vegas Pro 12 users to enjoy remarkable performance improvements across a broad range of popularly-priced, widely available GPU devices. By utilizing the amazing parallel computing resources of the GPU for video processing, the main CPU is freed up for other tasks, such as video decoding and user interface display.\\
+Vegas Pro 12 accelerates both video playback and rendering, providing improved performance results from start to finish. Significant portions of the application were entirely reworked, resulting in an enhanced and more creative editing experience. Over 45 effects, transitions, generators and compositors are GPU-accelerated in Vegas Pro 12, as well as a substantial amount of built-in video processing such as crossfades, fades, alpha compositing, framerate resampling, interlace processing, pan/crop, track motion, opacity, fade-to-color, and multicamera display.\\
+\section{Results}
+\textbf{Video Details:}\\
+	Video Resolution: 1920 x 1080\\
+	fps: 29\\
+	filetype: NTSC-mp4\\
+	Playback Time: 6:47 min\\\\
+\textbf{Intel Xeon with Nvidia Tesla C2050}\\
+	Rendering Time: 5:40 min\\
+	Output format: Mainconcept Internet HD 1080p (mp4)\\
+	CPU Usage : 70-75\%\\
+	GPU Usage : 60-70\%\\\\
+\textbf{Intel Xeon without Nvidia Tesla C2050}\\
+	Rendering Time: 19:34 min\\
+	Output format: Mainconcept Internet HD 1080p (mp4)\\
+	CPU Usage : 90-95\%\\
+	GPU Usage : None\\\\
+\textbf{Intel i5-2450M with Nvidia Geforce GT 525m}\\ 
+	Rendering Time: 16:18 min\\
+	Output format: Mainconcept Internet HD 1080p (mp4)\\
+	CPU Usage : 70-75\%\\
+	GPU Usage : 60-70\%\\\\
+\textbf{Intel i7-3610QM with Nvidia Geforce GT 630m}\\ 
+	Rendering Time:  9:01 min\\
+	Output format: Mainconcept Internet HD 1080p (mp4)\\
+	CPU Usage : 25-35\%\\
+	GPU Usage : 85-90\%\\\\\\
+
+\newpage
+\section{Output}
+\textbf{Intel Xeon with Nvidia Tesla C2050}\\\\
+\includegraphics [width=1.2\textwidth]{sony1.png}
+\newpage
+\textbf{Intel i5-2450M with Nvidia Geforce GT 525m}\\\\
+\includegraphics [width=1.2\textwidth]{525m.jpg}\\
+\newpage
+\textbf{Intel i7-3610QM with Nvidia Geforce GT 630m}\\\\
+\includegraphics [width=1.2\textwidth]{630m.jpg}
+
