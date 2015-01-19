@@ -1,4 +1,4 @@
-README
+READ ME
 
 Codes:
 benchmark1 -> benchmark1.cu   computes the square root of an array and stores the output in another array.
@@ -15,4 +15,5 @@ benchmark4 ->  It computes the video rendering capabilities of CPU and GPU and r
 Additional Data:
 
 A separate study report has been written by us on "GPU implementation in Bitcoin Mining" ,which could not be included in the previously submitted project definition as this topic is relatively new  and has surfaced just a few weeks back.
+
 
